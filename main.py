@@ -1,15 +1,17 @@
 
 #>> Criar MATRIZ
-a = 1
-b = 1
+# from ast import If
+
+Lin = 1
+Col = 1
 
 matriz = {}
-while a <= 9:
-    while b <= 9:
-        matriz.update({str(a)+str(b): ' '})
-        b += 1
-    b = 1
-    a += 1
+while Lin <= 9:
+    while Col <= 9:
+        matriz.update({str(Lin)+str(Col): ' '})
+        Col += 1
+    Col = 1
+    Lin += 1
 
 numeros_iniciais = {
     '16' : 5,
@@ -50,33 +52,79 @@ numeros_iniciais = {
     '94' : 4
 }
 
-a = 1
-b = 1
-while a <= 9:
-    while b <= 9:
-        key = str(a)+str(b)
+Lin = 1
+Col = 1
+while Lin <= 9:
+    while Col <= 9:
+        key = str(Lin)+str(Col)
         if key in numeros_iniciais :
             matriz.update({key : numeros_iniciais[key]})
-        b += 1
-    b = 1
-    a += 1
+        Col += 1
+    Col = 1
+    Lin += 1
+
+blocos = {
+    'bloco_1' : [11, 12, 13, 21, 22, 23, 31, 32, 33],
+    'bloco_2' : [14, 15, 16, 24, 25, 26, 34, 35, 36],
+    'bloco_3' : [17, 18, 19, 27, 28, 29, 37, 38, 39],
+    'bloco_4' : [41, 42, 43, 51, 52, 53, 61, 62, 63],
+    'bloco_5' : [44, 45, 46, 54, 55, 56, 64, 65, 66],
+    'bloco_6' : [47, 48, 49, 57, 58, 59, 67, 68, 69],
+    'bloco_7' : [71, 72, 73, 81, 82, 83, 91, 92, 93],
+    'bloco_8' : [74, 75, 76, 84, 85, 86, 94, 95, 96],
+    'bloco_9' : [77, 78, 79, 87, 88, 89, 97, 98, 99],
+}
+
+# for bloco, array in blocos.items():
+#     if 91 in array :
+#         print(bloco)
+#         teste = bloco
+
+# print(blocos[teste])
 
 
-#print(matriz)
+def NumeroValido(Cell, Num, Bloco):
+    Lin = Cell[0]
+    Col = Cell[1]
+    x = 1
+    
+    for Cel_bloco in Bloco :
+        if Num == matriz[str(str(Cel_bloco)[0])+str(str(Cel_bloco)[1])] :
+            return False
+    while x <= 9:
+        if Num == matriz[str(Lin)+str(x)] :
+            return False
+        if Num == matriz[str(x)+str(Col)] :
+            return False
+        x += 1
+    return True 
 
-bloco_1 = {'ini' : 11, 'fim' : 33}
-bloco_2 = {'ini' : 14, 'fim' : 36}
-bloco_3 = {'ini' : 17, 'fim' : 39}
-bloco_4 = {'ini' : 41, 'fim' : 63}
-bloco_5 = {'ini' : 44, 'fim' : 66}
-bloco_6 = {'ini' : 47, 'fim' : 69}
-bloco_7 = {'ini' : 71, 'fim' : 93}
-bloco_8 = {'ini' : 74, 'fim' : 96}
-bloco_9 = {'ini' : 77, 'fim' : 99}
+def VerificarBloco(Num):
+    for bloco, array in blocos.items():
+        if Num in array :
+            return blocos[bloco]
+
+#verificação
+Lin = 1
+Col = 1
+while Lin <= 9:
+    while Col <= 9:
+        if(matriz[str(Lin)+str(Col)] == " "):
+            Cell = str(Lin)+str(Col)
+            Bloco = VerificarBloco(int(Cell))
+            Num = 1
+            while Num <= 9 :
+                if NumeroValido(Cell, Num, Bloco) == True :
+                    matriz[str(Lin)+str(Col)] = Col
+                Num += 1
+        Col += 1
+    Col = 1
+    Lin += 1
 
 
-#exit()
 
+
+# daqui para baixo é só apresentação
 a = 1
 b = 1
 c = 1
